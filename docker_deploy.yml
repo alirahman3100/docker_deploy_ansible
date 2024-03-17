@@ -1,0 +1,29 @@
+---
+- name: Deploy Apache Docker Container
+  hosts: 192.168.0.107
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: Deploy Apache Docker Container
+      docker_container:
+        name: apache_container
+        image: httpd:latest
+        state: started
+        ports:
+          - "80:80"
+
+    - name: Check if Docker network exists
+      command: docker network inspect apache_network
+      register: network_inspect
+      ignore_errors: yes
+
+    - name: Remove Docker network if it exists
+      docker_network:
+        name: apache_network
+        state: absent
+      when: network_inspect is succeeded
+
+    - name: Configure Networking for Apache Container
+      shell: >
+        docker network create --subnet=172.168.30.0/30 apache_network
