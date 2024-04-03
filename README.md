@@ -9,6 +9,7 @@ and install Docker on Ubuntu VM.
 Then make a directory in wsl using commnad mkdir ansible_project
 Using command cd ansible_project we entered into this directory.
 In this directory I make Ansible-Playbook using command sudo nano docker_deploy.yml
+Also in this directory I make a file name hosts in which you add IP address of VM on which Docker is installed.
 In this playbook I define host, tasks and network on which apache container is running.
 The given Network for Apache Docker Conatainer is 172.168.10.0/30
 After that we run this Ansible Playbook using coomand ansible-playbook -i hosts docker_deploy.yml
